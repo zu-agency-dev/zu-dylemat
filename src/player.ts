@@ -14,15 +14,12 @@ const episodeStatus = document.querySelector('[zu-dylemat="episode-status"]') as
 const endingName = document.querySelector('[zu-dylemat="ending-name"]') as HTMLElement;
 const endingLink = document.querySelector('[zu-dylemat="ending-link"]') as HTMLElement;
 
-const playIcon = document.querySelector('.play-icon') as HTMLElement;
+const playIcon = document.querySelector('.play-icon-animated') as HTMLElement;
 const pauseIcon = document.querySelector('.pause-button') as HTMLElement;
 
 Howler.volume(0.5);
 Howler.autoUnlock = true;
 Howler.usingWebAudio = true;
-
-range.style.pointerEvents = 'none';
-rateDropdown.style.pointerEvents = 'none';
 
 const howl = new Howl({
   src: [audioLink.innerText],
@@ -30,16 +27,17 @@ const howl = new Howl({
   onplay() {
     requestAnimationFrame(updateState);
     currentRate.innerHTML = 'x' + String(howl.rate());
-    range.style.pointerEvents = 'auto';
-    rateDropdown.style.pointerEvents = 'auto';
+    playIcon.style.animation = 'none';
+    playIcon.style.color = '#E8E3DF';
     showAdditionalPoints();
   },
   onpause() {
-    range.style.pointerEvents = 'auto';
-    rateDropdown.style.pointerEvents = 'auto';
+    playIcon.style.color = '#3E3B38';
   },
   onload() {
     range.max = String(howl.duration());
+    range.classList.remove('pointer-events-off');
+    rateDropdown.classList.remove('pointer-events-off');
   },
   onrate() {
     currentRate.innerHTML = 'x' + String(howl.rate());
@@ -48,6 +46,7 @@ const howl = new Howl({
     requestAnimationFrame(updateState);
   },
   onend() {
+    rateDropdown.classList.add('pointer-events-off');
     if (episodeStatus.innerText === 'Won' && endingName.innerText) {
       window.location.replace(window.location.origin + endingLink.getAttribute('href'));
     } else if (episodeStatus.innerText === 'Lost' && endingName.innerText) {
@@ -55,8 +54,6 @@ const howl = new Howl({
     } else if (episodeStatus.innerText === '') {
       return;
     }
-    range.style.pointerEvents = 'none';
-    rateDropdown.style.pointerEvents = 'none';
     showAdditionalPoints();
   },
 });
@@ -98,10 +95,13 @@ function showAdditionalPoints() {
     }
 
     notificationClose.addEventListener('click', () => {
-      notificationClose.classList.add('hide');
+      notifyNewPoints.classList.add('hide');
     });
 
-    howl.on('end', () => showNextPoints());
+    howl.on('end', () => {
+      showNotificationNewPoints();
+      showNextPoints();
+    });
 
     function whenToShow(sec: number) {
       const showAt = sec;
@@ -113,7 +113,6 @@ function showAdditionalPoints() {
         if (mutation && parseInt(range.value) >= whenToShow(parseInt(displayPoint.innerHTML))) {
           showNextPoints();
           hideCurrentPoints();
-          showNotificationNewPoints();
         }
       });
     });
