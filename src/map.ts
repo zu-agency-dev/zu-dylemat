@@ -8,10 +8,10 @@ new Draggabilly(sectionMap, {
   handle: '.handle',
 });
 
-const minScale = 0;
+const minScale = 1;
 const maxScale = 10;
 const step = 1;
-let scale = 2;
+let scale = 1;
 
 const getMapElement = document.querySelector('.section_map') as HTMLElement;
 getMapElement.style.transform = `scale(${scale})`;
@@ -65,13 +65,13 @@ function getPoints(argX: NodeListOf<HTMLElement>, argY: NodeListOf<HTMLElement>)
   argX.forEach((element) => {
     const elementParent = element.parentElement as HTMLElement;
     const getPosition = Number(element.innerHTML);
-    elementParent.style.left = `${getPosition / 100}%`;
+    elementParent.style.left = `${getPosition}%`;
   });
 
   argY.forEach((element) => {
     const elementParent = element.parentElement as HTMLElement;
     const getPosition = Number(element.innerHTML);
-    elementParent.style.top = `${getPosition / 100}%`;
+    elementParent.style.top = `${getPosition}%`;
   });
 }
 
