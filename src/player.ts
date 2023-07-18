@@ -10,10 +10,6 @@ const rateItem = document.querySelector('[zu-dylemat="select-rate"]') as HTMLEle
 const currentRate = document.querySelector('[zu-dylemat="current-rate"]') as HTMLElement;
 const mapPoint = document.querySelectorAll('[zu-dylemat="map-point"]') as NodeListOf<HTMLElement>;
 const displayPoint = document.querySelector('[zu-dylemat="display-point"]') as HTMLElement;
-const episodeStatus = document.querySelector('[zu-dylemat="episode-status"]') as HTMLElement;
-const endingName = document.querySelector('[zu-dylemat="ending-name"]') as HTMLElement;
-const endingLink = document.querySelector('[zu-dylemat="ending-link"]') as HTMLElement;
-
 const playIcon = document.querySelector('.play-icon-animated') as HTMLElement;
 const pauseIcon = document.querySelector('.pause-button') as HTMLElement;
 
@@ -67,13 +63,6 @@ const howl = new Howl({
     });
 
     rateDropdown.classList.add('pointer-events-off');
-    // if (episodeStatus.innerText === 'Won' && endingName.innerText) {
-    //   window.location.replace(window.location.origin + endingLink.getAttribute('href'));
-    // } else if (episodeStatus.innerText === 'Lost' && endingName.innerText) {
-    //   window.location.replace(window.location.origin + endingLink.getAttribute('href'));
-    // } else if (episodeStatus.innerText === '') {
-    //   return;
-    // }
     showAdditionalPoints();
   },
 });
