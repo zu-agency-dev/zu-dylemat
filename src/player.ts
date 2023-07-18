@@ -46,14 +46,34 @@ const howl = new Howl({
     requestAnimationFrame(updateState);
   },
   onend() {
+    const endings = [
+      'special-show',
+      'gravedigger',
+      'przykoscielny-cmentarz',
+      'grabarz',
+      'rammbaum',
+      'audycja-specjalna',
+      'zjawa',
+      'szmuglerka',
+      'wieszcz',
+    ];
+
+    endings.forEach((ending) => {
+      if (window.location.href.indexOf(`/odcinki/${ending}` || `/episodes/${ending}`) > -1) {
+        window.location.replace(window.location.origin + `/zakonczenia/${ending}`);
+      } else {
+        return;
+      }
+    });
+
     rateDropdown.classList.add('pointer-events-off');
-    if (episodeStatus.innerText === 'Won' && endingName.innerText) {
-      window.location.replace(window.location.origin + endingLink.getAttribute('href'));
-    } else if (episodeStatus.innerText === 'Lost' && endingName.innerText) {
-      window.location.replace(window.location.origin + endingLink.getAttribute('href'));
-    } else if (episodeStatus.innerText === '') {
-      return;
-    }
+    // if (episodeStatus.innerText === 'Won' && endingName.innerText) {
+    //   window.location.replace(window.location.origin + endingLink.getAttribute('href'));
+    // } else if (episodeStatus.innerText === 'Lost' && endingName.innerText) {
+    //   window.location.replace(window.location.origin + endingLink.getAttribute('href'));
+    // } else if (episodeStatus.innerText === '') {
+    //   return;
+    // }
     showAdditionalPoints();
   },
 });
