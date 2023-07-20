@@ -19,7 +19,7 @@ Howler.usingWebAudio = true;
 
 const howl = new Howl({
   src: [audioLink.innerText],
-  html5: true,
+  // html5: true,
   onplay() {
     requestAnimationFrame(updateState);
     currentRate.innerHTML = 'x' + String(howl.rate());
