@@ -19,7 +19,7 @@ Howler.usingWebAudio = true;
 
 const howl = new Howl({
   src: [audioLink.innerText],
-  // html5: true,
+  html5: true,
   onplay() {
     requestAnimationFrame(updateState);
     currentRate.innerHTML = 'x' + String(howl.rate());
@@ -34,14 +34,17 @@ const howl = new Howl({
     range.max = String(howl.duration());
     range.classList.remove('pointer-events-off');
     rateDropdown.classList.remove('pointer-events-off');
+    cancelAnimationFrame(requestAnimationFrame(updateState));
   },
   onrate() {
     currentRate.innerHTML = 'x' + String(howl.rate());
+    cancelAnimationFrame(requestAnimationFrame(updateState));
   },
   onseek() {
     requestAnimationFrame(updateState);
   },
   onend() {
+    cancelAnimationFrame(requestAnimationFrame(updateState));
     const endings = [
       'special-show',
       'gravedigger',
