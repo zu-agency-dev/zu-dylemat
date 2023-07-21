@@ -44,10 +44,7 @@ const howl = new Howl({
     requestAnimationFrame(updateState);
   },
   onend() {
-    cancelAnimationFrame(requestAnimationFrame(updateState));
-    const endings = [
-      'special-show',
-      'gravedigger',
+    const endingsPL = [
       'przykoscielny-cmentarz',
       'grabarz',
       'rammbaum',
@@ -57,11 +54,17 @@ const howl = new Howl({
       'wieszcz',
     ];
 
-    endings.forEach((ending) => {
-      if (window.location.href.indexOf(`/odcinki/${ending}` || `/episodes/${ending}`) > -1) {
+    const endingsEN = ['special-show', 'gravedigger'];
+
+    endingsPL.forEach((ending) => {
+      if (window.location.href.indexOf(`/odcinki/${ending}`) > -1) {
         window.location.replace(window.location.origin + `/zakonczenia/${ending}`);
-      } else {
-        return;
+      }
+    });
+
+    endingsEN.forEach((ending) => {
+      if (window.location.href.indexOf(`/episodes/${ending}`) > -1) {
+        window.location.replace(window.location.origin + `/zakonczenia/${ending}`);
       }
     });
 
